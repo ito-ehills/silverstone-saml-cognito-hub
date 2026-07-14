@@ -1,9 +1,9 @@
 {
-  "name": "@monorepo-template/functions",
+  "name": "@silverstone-saml-cognito-hub/functions",
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
-    "@monorepo-template/core": "*",
+    "@silverstone-saml-cognito-hub/core": "*",
     "sst": "*"
   },
   "devDependencies": {

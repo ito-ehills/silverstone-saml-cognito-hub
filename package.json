@@ -1,5 +1,5 @@
 {
-  "name": "monorepo-template",
+  "name": "silverstone-saml-cognito-hub",
   "version": "0.0.0",
   "workspaces": [
     "packages/*"
