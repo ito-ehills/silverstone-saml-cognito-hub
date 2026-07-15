@@ -6,7 +6,8 @@ export const api = new sst.aws.ApiGatewayV2("Api", {
       handler: {
       },
     }
-  }
+  },
+  cors: true
 });
 
 api.route("GET /dummy", "packages/functions/src/dummy.main");

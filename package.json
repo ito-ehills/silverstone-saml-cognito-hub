@@ -10,6 +10,9 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^6.15.4",
+    "@pulumi/aws": "^7.36.0",
+    "aws-amplify": "^6.18.0",
     "sst": "^3"
   }
 }

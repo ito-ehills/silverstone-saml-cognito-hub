@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Amplify } from "aws-amplify";
+import { Amplify } from 'aws-amplify';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from './App.tsx'
@@ -10,11 +10,22 @@ import './index.css'
 
 Amplify.configure({
   Auth: {
-    mandatorySignIn: true,
-    region: config.cognito.REGION,
-    userPoolId: config.cognito.USER_POOL_ID,
-    identityPoolId: config.cognito.IDENTITY_POOL_ID,
-    userPoolWebClientId: config.cognito.APP_CLIENT_ID,
+    Cognito: {
+      userPoolId: config.cognito.USER_POOL_ID,
+      userPoolClientId: config.cognito.APP_CLIENT_ID,
+      region: config.cognito.REGION,
+      //mandatorySignIn: true,
+      //identityPoolId: config.cognito.IDENTITY_POOL_ID,
+      loginWith: {
+        oauth: {
+          domain: 'silverstone-saml-hub.auth.us-west-2.amazoncognito.com', // Do not include https://
+          scopes: ['openid', 'email', 'profile'],
+          redirectSignIn: ['http://localhost:5173', 'https://cloudfront.net'],
+          redirectSignOut: ['http://localhost:5173', 'https://cloudfront.net'],
+          responseType: 'code', // Must match Authorization code grant in console
+        }
+      }
+    }
   },
   Storage: {
     region: config.s3.REGION,
