@@ -33,18 +33,18 @@ Amplify.configure({
     }
   },
   Storage: {
-//    region: config.s3.REGION,
-    bucket: config.s3.BUCKET,
-//    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    S3: {
+      bucket: config.s3.BUCKET,
+      region: config.s3.REGION
+    }
   },
   API: {
-    endpoints: [
-      {
-        name: "Silverstone",
+    REST: {
+      Silverstone: {
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
-    ],
+    },
   },
 });
 
