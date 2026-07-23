@@ -1,27 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { LinkContainer } from "react-router-bootstrap";
-import { getCurrentUser, signInWithRedirect, signOut } from 'aws-amplify/auth';
-import Routes from "./Routes.tsx";
+import { useEffect, useState } from 'react';
+//import Navbar from "react-bootstrap/Navbar";
+//import Nav from "react-bootstrap/Nav";
+//import { LinkContainer } from "react-router-bootstrap";
+import { fetchAuthSession, getCurrentUser, signInWithRedirect, signOut, type AuthUser } from 'aws-amplify/auth';
+//import { Hub } from 'aws-amplify/utils';
+//import Routes from "./Routes.tsx";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     checkUser();
   }, []);
 
+
   async function checkUser() {
+    console.log('checkUser...');
     try {
-      const currentUser = await getCurrentUser();
+      /* const session = */ await fetchAuthSession({ forceRefresh: true });
+      console.log('after fetchAuthSession...');
+//      if (session.tokens?.idToken || session.tokens?.accessToken) {
+        const currentUser = await getCurrentUser();
+        console.log('Successfully authenticated:', currentUser);
+//      } else {
+//        throw new Error('No valid tokens found');
+//      }
+      console.log('currentUser: ');
+      console.log(currentUser);
       setUser(currentUser);
+      await getCustomRoles();
     } catch (err) {
+      console.log(err)
       setUser(null);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function getCustomRoles() {
+    try {
+      const session = await fetchAuthSession();
+      // Custom attributes are stored within the ID Token's payloads
+      console.log("session:", session);
+      const customRoles = session.tokens?.idToken?.payload['custom:roles'];
+    
+      console.log("User Roles:", customRoles);
+      return customRoles;
+    } catch (error) {
+      console.error("Error fetching auth session:", error);
     }
   }
 
