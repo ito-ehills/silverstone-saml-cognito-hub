@@ -47,6 +47,9 @@ function App() {
       const customRoles = session.tokens?.idToken?.payload['custom:roles'];
     
       console.log("User Roles:", customRoles);
+      const uid = session.tokens?.idToken?.payload['custom:GW-UID'];
+      const gid = session.tokens?.idToken?.payload['custom:GW-GID'];
+      console.log(`UID=${uid}, GID=${gid}`);
       return customRoles;
     } catch (error) {
       console.error("Error fetching auth session:", error);

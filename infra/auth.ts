@@ -31,6 +31,39 @@ export const userPool = new aws.cognito.UserPool("MyUserPool", {
             minLength: "0",
           },
         },
+        {
+          attributeDataType: "String",
+          developerOnlyAttribute: false,
+          mutable: true,
+          required: false,
+          name: "roles",
+          stringAttributeConstraints: {
+            maxLength: "2048",
+            minLength: "0",
+          },
+        },
+        {
+          attributeDataType: "String",
+          developerOnlyAttribute: false,
+          mutable: true,
+          required: false,
+          name: "GW-UID",
+          stringAttributeConstraints: {
+            maxLength: "512",
+            minLength: "0",
+          },
+        },
+        {
+          attributeDataType: "String",
+          developerOnlyAttribute: false,
+          mutable: true,
+          required: false,
+          name: "GW-GID",
+          stringAttributeConstraints: {
+            maxLength: "512",
+            minLength: "0",
+          },
+        },
       ],
 });
 
@@ -59,6 +92,9 @@ export const samlProvider = new aws.cognito.IdentityProvider("SamlProvider", {
       // Map the SAML assertion attribute to Cognito's email attribute
       attributeMapping: {
         email: "email",
+        "custom:roles": "roles",
+        "custom:GW-UID": "GW-UID",
+        "custom:GW-GID": "GW-GID",
       },
 });
 
