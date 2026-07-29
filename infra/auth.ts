@@ -1,11 +1,15 @@
 import { api } from "./api";
 import { CognitoUserPool } from "sst/aws/cognito";
 import { bucket } from "./storage";
+import * as fs from "fs";
+
 
 const region = aws.getRegionOutput().name;
 
+const samlMetadataXml = fs.readFileSync("idp-descriptor.xml", "utf-8");
+
     // 1. Create the Cognito User Pool
-export const userPool = new aws.cognito.UserPool("UserPool", {
+export const userPool = new aws.cognito.UserPool("MyUserPool", {
       name: `${$app.name}-${$app.stage}-user-pool`,
       passwordPolicy: {
         minimumLength: 8,
@@ -40,26 +44,27 @@ export const userPoolDomain = new aws.cognito.UserPoolDomain("UserPoolDomain", {
     // 3. Define the SAML Identity Provider (IdP)
 export const samlProvider = new aws.cognito.IdentityProvider("SamlProvider", {
       userPoolId: userPool.id,
-      providerName: "CorporateIdP", // Name displayed in your config/IdP
+      providerName: "EhillsCorporateIdP", // Name displayed in your config/IdP
       providerType: "SAML",
       providerDetails: {
         // Option A: Paste the Raw XML Metadata string directly
         // MetadataDoc: '<EntityDescriptor ...></EntityDescriptor>'
         
         // Option B: Provide a publicly accessible URL to your IdP's metadata
-        MetadataURL: "https://platinumstone-idp.ayagu.jp:8443/realms/cognito-saml-test/protocol/saml/descriptor",
+        //MetadataURL: "https://platinumstone-idp.ayagu.jp:8443/realms/cognito-saml-test/protocol/saml/descriptor",
+        MetadataFile: samlMetadataXml,
         
         IDPSignout: "true",
       },
       // Map the SAML assertion attribute to Cognito's email attribute
       attributeMapping: {
-        email: "http://xmlsoap.org",
+        email: "email",
       },
 });
 
     // 4. Determine Local vs Production URL redirects
     const isProd = $app.stage === "production";
-    const appUrl = isProd ? "https://amplifyapp.com" : "http://localhost:3000";
+    const appUrl = isProd ? "https://amplifyapp.com" : "http://localhost:5173";
 
     // 5. Create the Cognito App Client configured for SAML
 export const userPoolClient = new aws.cognito.UserPoolClient("UserPoolClient", {

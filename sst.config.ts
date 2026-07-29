@@ -10,11 +10,13 @@ export default $config({
     const aws = await import("@pulumi/aws");
 
     const auth = await import("./infra/auth.ts");
-    const web = await import("./infra/web");
+    //const web = await import("./infra/web");
+    const { createWeb } = await import("./infra/web");
+    const web = createWeb($app.stage);
 
     // 6. Outputs to pass directly to your frontend app
     return {
-      SiteURL: web.frontend.url,
+      SiteURL: web.url,
       UserPoolId: auth.userPool.id,
       UserPoolClientId: auth.userPoolClient.id,
       UserPoolDomain: auth.userPoolDomain.domain.apply(

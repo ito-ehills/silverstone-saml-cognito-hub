@@ -22,7 +22,7 @@ Amplify.configure({
       //identityPoolId: config.cognito.IDENTITY_POOL_ID,
       loginWith: {
         oauth: {
-          domain: 'silverstone-saml-auth-kayito.auth.us-west-2.amazoncognito.com', // Do not include https://
+          domain: `silverstone-saml-auth-${config.cognito.STAGE}.auth.us-west-2.amazoncognito.com`, // Do not include https://
           scopes: ['openid', 'email', 'profile'],
 //          scopes: ['email'],
           redirectSignIn: ['http://localhost:5173/', 'https://cloudfront.net'],

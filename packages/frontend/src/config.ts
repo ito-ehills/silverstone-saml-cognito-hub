@@ -12,6 +12,7 @@ const config = {
     REGION: import.meta.env.VITE_REGION,
     USER_POOL_ID: import.meta.env.VITE_USER_POOL_ID,
     APP_CLIENT_ID: import.meta.env.VITE_USER_POOL_CLIENT_ID,
+    STAGE: import.meta.env.VITE_STAGE,
 //    IDENTITY_POOL_ID: import.meta.env.VITE_IDENTITY_POOL_ID,
   },
 };
