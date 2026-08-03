@@ -1,4 +1,4 @@
 curl -X POST \
 -H 'Content-Type: application/json' \
--d '{"content":"Hello World"}' \
+-d '{"topic": "qrvms/rhmt", "message":"Hello RHMT!"}' \
 $1
