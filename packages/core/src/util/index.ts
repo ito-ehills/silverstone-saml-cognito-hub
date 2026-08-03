@@ -11,8 +11,9 @@ export module Util {
         // Run the Lambda
         body = await lambda(event, context);
         statusCode = 200;
-      } catch (error) {
+      } catch (error: any) {
         statusCode = 500;
+        console.error("Full Error Object:", error);
         body = JSON.stringify({
           error: error instanceof Error ? error.message : String(error),
         });

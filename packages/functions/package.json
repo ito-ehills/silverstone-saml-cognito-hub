@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-iot-data-plane": "^3.1100.0",
     "@silverstone-saml-cognito-hub/core": "*",
     "sst": "*"
   },

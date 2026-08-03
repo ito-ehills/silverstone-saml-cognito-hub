@@ -14,6 +14,11 @@ declare module "sst" {
       "type": "sst.aws.StaticSite"
       "url": string
     }
+    "SSRealtime": {
+      "authorizer": string
+      "endpoint": string
+      "type": "sst.aws.Realtime"
+    }
     "Uploads": {
       "name": string
       "type": "sst.aws.Bucket"
