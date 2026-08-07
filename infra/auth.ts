@@ -92,7 +92,7 @@ export const samlProvider = new aws.cognito.IdentityProvider("SamlProvider", {
       // Map the SAML assertion attribute to Cognito's email attribute
       attributeMapping: {
         email: "email",
-        "custom:roles": "roles",
+        "custom:roles": "ROLES",
         "custom:GW-UID": "GW-UID",
         "custom:GW-GID": "GW-GID",
       },
